@@ -1,14 +1,13 @@
 // ==UserScript==
-// @name         Aliexpress Total Price
-// @version      0.2
-// @description  Show Total Price on Aliexpress
+// @name         AliExpress Total Price
+// @version      0.3
+// @description  Show Total Price on AliExpress
 // @author       EL-S
 // @match        *://*.aliexpress.com/item/*
 // @match        *://*.aliexpress.com/store/product*
 // @match        *://*.aliexpress.com/wholesale*
 // @match        *://*.aliexpress.com/shopcart*
 // @grant        none
-// @namespace https://greasyfork.org/users/298177
 // @require http://code.jquery.com/jquery-3.4.1.min.js
 // ==/UserScript==
 
@@ -33,10 +32,10 @@ function replaceValues(item) {
           shipping = 0.0
       }
       else {
-          shipping = parseFloat(shipping.split(" ")[2].split("&")[0].replace("$", ""));
+          shipping = parseFloat(shipping.split(" ")[2].split("&")[0].replace("$", "").replace(",", ""));
       }
-      var price_number = parseFloat(price.replace("$", ""));
-      var price_number2 = parseFloat(price2);
+      var price_number = parseFloat(price.replace("$", "").replace(",", ""));
+      var price_number2 = parseFloat(price2.replace(",", ""));
       var element = document.createElement("div");
       element.className = "product-price-current total";
 
@@ -47,7 +46,7 @@ function replaceValues(item) {
       }
       else
       {
-          element2.innerHTML = currency+" $"+(price_number+shipping).toFixed(2)+" - "+(price_number2+shipping).toFixed(2);
+          element2.innerHTML = currency+" $"+(price_number+shipping).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+" - "+(price_number2+shipping).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
       }
       element2.style = "color:red;";
       element.appendChild(element2);
@@ -81,10 +80,10 @@ function replaceSearchValues(item) {
           shipping = 0.0
       }
       else {
-          shipping = parseFloat(shipping.split(" ")[2].split("&")[0].replace("$", ""));
+          shipping = parseFloat(shipping.split(" ")[2].split("&")[0].replace("$", "").replace(",", ""));
       }
-      var price_number = parseFloat(price.replace("$", ""));
-      var price_number2 = parseFloat(price2);
+      var price_number = parseFloat(price.replace("$", "").replace(",", ""));
+      var price_number2 = parseFloat(price2.replace(",", ""));
       var element = document.createElement("div");
       element.className = "item-price-wrap";
 
@@ -94,11 +93,11 @@ function replaceSearchValues(item) {
       var element3 = document.createElement("span");
       element3.className = "price-current";
       if (price_number2 == 0) {
-          element3.innerHTML = currency+" $"+(price_number+shipping).toFixed(2);
+          element3.innerHTML = currency+" $"+(price_number+shipping).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
       }
       else
       {
-          element3.innerHTML = currency+" $"+(price_number+shipping).toFixed(2)+" - "+(price_number2+shipping).toFixed(2);
+          element3.innerHTML = currency+" $"+(price_number+shipping).toFixed(2)+" - "+(price_number2+shipping).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
       }
       element3.style = "color:red;";
       element2.appendChild(element3);
@@ -119,14 +118,14 @@ function replaceCartValues(item) {
           shipping = 0.0
       }
       else {
-          shipping = parseFloat(shipping.split(" ")[2].split("&")[0].replace("$", ""));
+          shipping = parseFloat(shipping.split(" ")[2].split("&")[0].replace("$", "").replace(",", ""));
       }
-      var price_number = parseFloat(price.replace("$", ""));
+      var price_number = parseFloat(price.replace("$", "").replace(",", ""));
       var element = document.createElement("div");
       element.className = "cost-main normal";
       var element2 = document.createElement("span");
       element2.className = "main-cost-price";
-      element2.innerHTML = currency+" $"+(price_number+shipping).toFixed(2);
+      element2.innerHTML = currency+" $"+(price_number+shipping).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
       element2.style = "color:red;";
       element.appendChild(element2);
       price_element[0].insertAdjacentElement('afterend', element);
