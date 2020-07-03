@@ -1,12 +1,13 @@
 // ==UserScript==
 // @name         AliExpress Total Price
-// @version      0.3
+// @version      0.4
 // @description  Show Total Price on AliExpress
 // @author       EL-S
 // @match        *://*.aliexpress.com/item/*
 // @match        *://*.aliexpress.com/store/product*
 // @match        *://*.aliexpress.com/wholesale*
 // @match        *://*.aliexpress.com/shopcart*
+// @match        *://*.aliexpress.com/w/*
 // @grant        none
 // @require http://code.jquery.com/jquery-3.4.1.min.js
 // ==/UserScript==
@@ -197,13 +198,13 @@ function init() {
             }
         }, 100);
     }
-    else if (/\/wholesale/.test (location.pathname) ) {
+    else if (/\/wholesale/.test (location.pathname)) {
         update_search();
         onElementInserted('body', '.product-info', function(element) {
             update_search();
         });
     }
-    else if (/\/shopcart/.test (location.pathname) ) {
+    else if (/\/shopcart/.test (location.pathname)) {
         update_cart();
         onElementInserted('body', '.product-main', function(element) {
             update_cart();
